@@ -6,6 +6,7 @@
 //  Copyright © 2017 Mapbox Inc. All rights reserved.
 //
 
+#import <GLKit/GLKit.h>
 #import <React/RCTUIManager.h>
 
 #import "RCTMGLMapViewManager.h"
@@ -322,7 +323,8 @@ RCT_EXPORT_METHOD(setCamera:(nonnull NSNumber*)reactTag
 
 - (void)didTapMap:(UITapGestureRecognizer *)recognizer
 {
-    RCTMGLMapView *mapView = (RCTMGLMapView*)recognizer.view;    
+    RCTMGLMapView *mapView = (RCTMGLMapView *)recognizer.view;
+
     CGPoint screenPoint = [recognizer locationInView:mapView];
     NSArray<RCTMGLSource *> *touchableSources = [mapView getAllTouchableSources];
     
@@ -359,6 +361,16 @@ RCT_EXPORT_METHOD(setCamera:(nonnull NSNumber*)reactTag
 
             RCTMGLEvent *event = [RCTMGLEvent makeEvent:eventType withPayload:geoJSONDict];
             [self fireEvent:event withCallback:source.onPress];
+            return;
+        }
+    } else {
+        // So we got no features, maybe it was tapping on an on-screen button?
+        UIView *hitView = [recognizer.view hitTest:[recognizer locationInView:recognizer.view] withEvent:NULL];
+
+        // This is for empty taps, so we want to skip those
+        Class privateAnnotationContainerClass = NSClassFromString(@"MGLAnnotationContainerView");
+        // Check if we've hit the main view, instead of an arbitrary subview
+        if (![hitView isKindOfClass:RCTMGLMapView.class] && ![hitView isKindOfClass:GLKView.class] && ![hitView isKindOfClass:privateAnnotationContainerClass]) {
             return;
         }
     }
