@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <React/RCTImageLoader.h>
+#import <React/RCTImageLoaderProtocol.h>
 
 @interface RCTMGLImageQueue : NSObject
 

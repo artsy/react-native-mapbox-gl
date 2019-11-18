@@ -5,7 +5,7 @@
 //  Created by Nick Italiano on 2/28/18.
 //  Copyright © 2018 Mapbox Inc. All rights reserved.
 //
-#import <React/RCTImageLoader.h>
+#import <React/RCTImageLoaderProtocol.h>
 
 @interface RCTMGLImageQueueOperation : NSBlockOperation
 

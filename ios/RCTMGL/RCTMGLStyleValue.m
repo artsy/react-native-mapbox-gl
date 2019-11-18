@@ -8,7 +8,7 @@
 
 #import "RCTMGLStyleValue.h"
 #import "RCTMGLUtils.h"
-#import <React/RCTImageLoader.h>
+#import <React/RCTImageLoaderProtocol.h>
 
 @implementation RCTMGLStyleValue
 {
